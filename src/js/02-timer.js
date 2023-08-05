@@ -79,3 +79,101 @@
 // УВАГА
 //* Наступний функціонал не обов'язковий для здавання завдання, але буде хорошою додатковою практикою.
 //* Для відображення повідомлень користувачеві, замість window.alert(), використовуй бібліотеку notiflix.
+
+//! ---------------------------   ВАРІАНТ 1   -------------------------------
+
+import flatpickr from 'flatpickr';
+import 'flatpickr/dist/flatpickr.min.css';
+import { Notify } from 'notiflix/build/notiflix-notify-aio';
+
+//* Вибираємо необхідні елементи зі сторінки
+const $startButton = document.querySelector('button[data-start]');
+const $inputDate = document.querySelector('#datetime-picker');
+const $timerValues = {
+  days: document.querySelector('span[data-days]'),
+  hours: document.querySelector('span[data-hours]'),
+  minutes: document.querySelector('span[data-minutes]'),
+  seconds: document.querySelector('span[data-seconds]'),
+};
+
+//* Вимикаємо кнопку "Start" на початку (вона буде неактивна до вибору користувачем дати):
+$startButton.disabled = true;
+
+//* Ініціалізуємо деякі змінні:
+let currentDate = Date.now(); //*  Поточний час у мілісекундах
+let timeLeft = 0; //*          Залишок часу в мілісекундах
+let selectedDate = 0; //*      Вибрана дата у мілісекундах
+
+//* Створюємо налаштування для flatpickr:
+const options = {
+  enableTime: true, //* Включаємо вибір часу
+  time_24hr: true, //* Використовувати 24-годинний формат часу
+  defaultDate: new Date(), //* Встановлюємо поточну дату та час за замовчуванням
+  minuteIncrement: 1, //* Задаємо приріст мінут при виборі часу
+  onClose(selectedDates) {
+    //* При закритті вибору дати та часу викликається ця функція
+    if (Date.parse(selectedDates[0]) < currentDate) {
+      //* Якщо вибрана дата менша за поточну, виводимо повідомлення про помилку
+      Notify.failure('Please choose a date in the future');
+      $startButton.disabled = true; //* Вимикаємо кнопку "Start"
+    } else {
+      //* Інакше запам'ятовуємо вибрану дату та час
+      selectedDate = Date.parse(selectedDates[0]);
+      $startButton.disabled = false; //* Вмикаємо кнопку "Start"
+    }
+  },
+};
+
+//* Ініціалізуємо flatpickr з вказаними налаштуваннями:
+const datePicker = flatpickr($inputDate, options);
+
+//* Додаємо обробник події на кнопку "Start", який викликається при натисканні на неї:
+$startButton.addEventListener('click', onStartButtonClick);
+
+//* Визначаємо функцію onStartButtonClick(), яка стартує таймер:
+function onStartButtonClick() {
+  const interval = setInterval(() => {
+    //* Отримуємо поточний час
+    currentDate = Date.now();
+    //* Обчислюємо залишок часу (різницю між вибраною датою та поточним часом)
+    timeLeft = selectedDate - currentDate;
+    if (timeLeft > 0) {
+      //* Якщо залишок часу більше 0, оновлюємо значення таймера на сторінці
+      const convertedTimeLeft = convertMs(timeLeft);
+      $timerValues.days.textContent = convertedTimeLeft.days;
+      $timerValues.hours.textContent = convertedTimeLeft.hours;
+      $timerValues.minutes.textContent = convertedTimeLeft.minutes;
+      $timerValues.seconds.textContent = convertedTimeLeft.seconds;
+    } else {
+      //* Інакше зупиняємо таймер
+      clearInterval(interval);
+    }
+  }, 1000); //* Оновлюємо таймер кожну секунду
+}
+
+//* Визначаємо ф-цію, яка перетворює час в мілісекундах у формат "дні:години:хв:сек":
+function convertMs(ms) {
+  //* К-сть мілісекунд у одиниці часу
+  const second = 1000;
+  const minute = second * 60;
+  const hour = minute * 60;
+  const day = hour * 24;
+
+  //* К-сть залишених днів
+  const days = addLeadingZero(Math.floor(ms / day));
+  //* К-сть залишених годин
+  const hours = addLeadingZero(Math.floor((ms % day) / hour));
+  //* К-сть залишених хв
+  const minutes = addLeadingZero(Math.floor(((ms % day) % hour) / minute));
+  //* К-сть залишених сек
+  const seconds = addLeadingZero(
+    Math.floor((((ms % day) % hour) % minute) / second)
+  );
+
+  return { days, hours, minutes, seconds };
+}
+
+//* Визначаємо ф-цію, яка додає перед числом 'нуль', якщо число < 10:
+function addLeadingZero(value) {
+  return String(value).padStart(2, '0');
+}
