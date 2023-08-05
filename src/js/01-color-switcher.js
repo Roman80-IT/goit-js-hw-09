@@ -16,12 +16,36 @@
 // }
 //! ------------------------------------------------------------------------------------------
 
-const $startBtn = document.querySelector('button[data-start]');
+//*
+
+const $startBtn = document.querySelector('button[data-start]'); //* використанням селекторів    // Приклад використанням атрибуту: ('[data-start]')
 const $stopBtn = document.querySelector('button[data-stop]');
 
-$startBtn.addEventListener('click', onStartBtnClick);
+$startBtn.addEventListener('click', onStartBtnClick); //* додаємо обробник подій до кнопок
+$stopBtn.disabled = true;
 
 let colorSwitch = null;
+
+//* ф-ції для кожної кнопки (onStartBtnClick і onStopBtnClick) додамо або видалимо обробники подій (addEventListener / removeEventListener) та змінюємо стан кнопок
+function onStartBtnClick() {
+  colorSwitch = setInterval(() => {
+    document.body.style.backgroundColor = `${getRandomHexColor()}`;
+  }, 1000);
+
+  $startBtn.removeEventListener('click', onStartBtnClick);
+  $stopBtn.addEventListener('click', onStopBtnClick);
+  $startBtn.disabled = true;
+  $stopBtn.disabled = false;
+}
+
+function onStopBtnClick() {
+  clearInterval(colorSwitch);
+
+  $stopBtn.removeEventListener('click', onStopBtnClick);
+  $startBtn.addEventListener('click', onStartBtnClick);
+  $startBtn.disabled = false;
+  $stopBtn.disabled = true;
+}
 
 function getRandomHexColor() {
   return `#${Math.floor(Math.random() * 16777215)
