@@ -127,10 +127,10 @@ const options = {
 //* Ініціалізуємо flatpickr з вказаними налаштуваннями:
 const datePicker = flatpickr($inputDate, options);
 
-//* Додаємо обробник події на кнопку "Start", який викликається при натисканні на неї:
+//* Додаємо обробник події на кнопку "Start" (викликається при натисканні на неї):
 $startButton.addEventListener('click', onStartButtonClick);
 
-//* Визначаємо функцію onStartButtonClick(), яка стартує таймер:
+//* Ф-ція, яка стартує таймер:
 function onStartButtonClick() {
   const interval = setInterval(() => {
     //* Отримуємо поточний час
@@ -151,7 +151,7 @@ function onStartButtonClick() {
   }, 1000); //* Оновлюємо таймер кожну секунду
 }
 
-//* Визначаємо ф-цію, яка перетворює час в мілісекундах у формат "дні:години:хв:сек":
+//* Ф-ція, яка перетворює час в мілісекундах у формат "дні:години:хв:сек":
 function convertMs(ms) {
   //* К-сть мілісекунд у одиниці часу
   const second = 1000;
@@ -173,7 +173,7 @@ function convertMs(ms) {
   return { days, hours, minutes, seconds };
 }
 
-//* Визначаємо ф-цію, яка додає перед числом 'нуль', якщо число < 10:
+//* Ф-ція, яка додає перед числом 'нуль' (якщо число < 10):
 function addLeadingZero(value) {
   return String(value).padStart(2, '0');
 }
