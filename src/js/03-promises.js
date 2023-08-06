@@ -62,5 +62,28 @@ $form.addEventListener('submit', event => {
     //* Обраховуємо затримку для проміса
     const promiseDelay =
       Number($formInputs.delay.value) + i * Number($formInputs.step.value);
+
+    //* Створюємо проміс
+    createPromise(i + 1, promiseDelay)
+      .then(value => {
+        Notify.success(value); //* Виводимо сповіщення про успішне виконання обіцянки
+      })
+      .catch(err => {
+        Notify.failure(err); //* Виводимо сповіщення про невдале виконання обіцянки
+      });
   }
 });
+
+//* Ф-ція для створення проміса
+function createPromise(position, delay) {
+  return new Promise((res, rej) => {
+    setTimeout(() => {
+      const shouldResolve = Math.random() > 0.3;
+      if (shouldResolve) {
+        res(`✅ Fulfilled promise ${position} in ${delay}ms`);
+      } else {
+        rej(`❌ Rejected promise ${position} in ${delay}ms`);
+      }
+    }, delay);
+  });
+}
