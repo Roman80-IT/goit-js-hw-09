@@ -66,10 +66,10 @@ $form.addEventListener('submit', event => {
     //* Створюємо проміс
     createPromise(i + 1, promiseDelay)
       .then(value => {
-        Notify.success(value); //* Виводимо сповіщення про успішне виконання обіцянки
+        Notify.success(value); //* Виводимо сповіщення про успішне виконання проміса
       })
       .catch(err => {
-        Notify.failure(err); //* Виводимо сповіщення про невдале виконання обіцянки
+        Notify.failure(err); //* Виводимо сповіщення про невдале виконання проміса
       });
   }
 });
