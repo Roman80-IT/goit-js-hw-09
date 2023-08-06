@@ -42,10 +42,13 @@
 // }
 
 //! ------------------------------   ВАРІАНТ 1   ----------------------------------
+//*  Створимо форму, яка дозволяє виконувати кілька промісів (асинхронних операцій) з різними затримками та к-стю повторень
+//*    і виводить сповіщення про їх результати за допомогою бібліотеки 'Notiflix Notify'
+
 //* Імпортуємо бібліотеку для сповіщень
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
 
-//* Знаходимо посилання на форму та поля вводу
+//* Вибираємо елементи - форму та поля вводу
 const $form = document.querySelector('.form');
 const $formInputs = {
   delay: document.querySelector('input[name="delay"]'),
@@ -55,11 +58,11 @@ const $formInputs = {
 
 //* Додаємо обробник події для подання форми
 $form.addEventListener('submit', event => {
-  event.preventDefault();
+  event.preventDefault(); //* запобігаємо стандартній поведінці (перезавантаженню сторінки)
 
   //* Отримуємо значення з поля "amount" і створюємо проміси в залежності від к-сті
   for (let i = 0; i < $formInputs.amount.value; i += 1) {
-    //* Обраховуємо затримку для проміса
+    //* Рахуємо затримку проміса
     const promiseDelay =
       Number($formInputs.delay.value) + i * Number($formInputs.step.value);
 
