@@ -52,3 +52,15 @@ const $formInputs = {
   step: document.querySelector('input[name="step"]'),
   amount: document.querySelector('input[name="amount"]'),
 };
+
+//* Додаємо обробник події для подання форми
+$form.addEventListener('submit', event => {
+  event.preventDefault();
+
+  //* Отримуємо значення з поля "amount" і створюємо проміси в залежності від к-сті
+  for (let i = 0; i < $formInputs.amount.value; i += 1) {
+    //* Обраховуємо затримку для проміса
+    const promiseDelay =
+      Number($formInputs.delay.value) + i * Number($formInputs.step.value);
+  }
+});
