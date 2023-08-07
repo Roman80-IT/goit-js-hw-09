@@ -438,9 +438,19 @@ const options = {
 
 const datePicker = flatpickr($inputDate, options);
 
-$startButton.addEventListener('click', onStartButtonClick);
-$resetButton.addEventListener('click', onResetButtonClick);
+// $startButton.addEventListener('click', onStartButtonClick);
+// $resetButton.addEventListener('click', onResetButtonClick);
 
+$startButton.addEventListener('click', () => {
+  onStartButtonClick();
+});
+
+$resetButton.addEventListener('click', () => {
+  onResetButtonClick();
+});
+
+// function onStartButtonClick()
+// window.onStartButtonClick = function ()
 function onStartButtonClick() {
   clearInterval(timerInterval);
   $inputDate.disabled = true;
@@ -470,6 +480,8 @@ function onStartButtonClick() {
   timerInterval = interval;
 }
 
+// function onResetButtonClick()
+// window.onResetButtonClick = function ()
 function onResetButtonClick() {
   console.log('Reset button clicked'); // Перевірка кнопки
   clearInterval(timerInterval);
