@@ -42,19 +42,6 @@
 // }
 
 //! ------------------------------   ВАРІАНТ 1   ----------------------------------
-//*  Створимо форму, яка дозволяє виконувати кілька промісів (асинхронних операцій) з різними затримками та к-стю повторень
-//*    і виводить сповіщення про їх результати за допомогою бібліотеки 'Notiflix Notify'
-
-//* Імпортуємо бібліотеку для сповіщень
-import { Notify } from 'notiflix/build/notiflix-notify-aio';
-
-//* Вибираємо елементи - форму та поля вводу
-const $form = document.querySelector('.form');
-const $formInputs = {
-  delay: document.querySelector('input[name="delay"]'),
-  step: document.querySelector('input[name="step"]'),
-  amount: document.querySelector('input[name="amount"]'),
-};
 
 //!---------------------------------- Виправити ------------------------------------
 //* Додаємо обробник події для подання форми
@@ -77,6 +64,20 @@ const $formInputs = {
 //       });
 //   }
 // });
+//! -------------------------------------------------------------------------
+//*  Створимо форму, яка дозволяє виконувати кілька промісів (асинхронних операцій) з різними затримками та к-стю повторень
+//*    і виводить сповіщення про їх результати за допомогою бібліотеки 'Notiflix Notify'
+
+//* Імпортуємо бібліотеку для сповіщень
+import { Notify } from 'notiflix/build/notiflix-notify-aio';
+
+//* Вибираємо елементи - форму та поля вводу
+const $form = document.querySelector('.form');
+const $formInputs = {
+  delay: document.querySelector('input[name="delay"]'),
+  step: document.querySelector('input[name="step"]'),
+  amount: document.querySelector('input[name="amount"]'),
+};
 
 //!--------------------------------- Виправлення ---------------------------
 //! якщо step <0 або delay <0 або  amount <=0 показуємо нотифікашку і не рендеримо проміси
