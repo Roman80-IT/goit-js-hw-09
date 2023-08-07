@@ -56,23 +56,53 @@ const $formInputs = {
   amount: document.querySelector('input[name="amount"]'),
 };
 
+//!---------------------------------- Виправити ------------------------------------
 //* Додаємо обробник події для подання форми
+// $form.addEventListener('submit', event => {
+//   event.preventDefault(); //* запобігаємо стандартній поведінці (перезавантаженню сторінки)
+
+//   //* Отримуємо значення з поля "amount" і створюємо проміси в залежності від к-сті
+//   for (let i = 0; i < $formInputs.amount.value; i += 1) {
+//     //* Рахуємо затримку проміса
+//     const promiseDelay =
+//       Number($formInputs.delay.value) + i * Number($formInputs.step.value);
+
+//     //* Створюємо проміс
+//     createPromise(i + 1, promiseDelay)
+//       .then(value => {
+//         Notify.success(value); //* Виводимо сповіщення про успішне виконання проміса
+//       })
+//       .catch(err => {
+//         Notify.failure(err); //* Виводимо сповіщення про невдале виконання проміса
+//       });
+//   }
+// });
+
+//!--------------------------------- Виправлення ---------------------------
+//! якщо step <0 або delay <0 або  amount <=0 показуємо нотифікашку і не рендеримо проміси
+
 $form.addEventListener('submit', event => {
-  event.preventDefault(); //* запобігаємо стандартній поведінці (перезавантаженню сторінки)
+  event.preventDefault();
 
-  //* Отримуємо значення з поля "amount" і створюємо проміси в залежності від к-сті
-  for (let i = 0; i < $formInputs.amount.value; i += 1) {
-    //* Рахуємо затримку проміса
-    const promiseDelay =
-      Number($formInputs.delay.value) + i * Number($formInputs.step.value);
+  const delay = Number($formInputs.delay.value);
+  const step = Number($formInputs.step.value);
+  const amount = Number($formInputs.amount.value);
 
-    //* Створюємо проміс
+  if (step < 0 || delay < 0 || amount <= 0) {
+    //* Показуємо нотифікацію (notification message) про некоректні значення
+    Notify.failure('Некоректні значення введених параметрів.');
+    return; //* Припиняємо виконання ф-ції, щоб не створювати проміси
+  }
+
+  for (let i = 0; i < amount; i += 1) {
+    const promiseDelay = delay + i * step;
+
     createPromise(i + 1, promiseDelay)
       .then(value => {
-        Notify.success(value); //* Виводимо сповіщення про успішне виконання проміса
+        Notify.success(value);
       })
       .catch(err => {
-        Notify.failure(err); //* Виводимо сповіщення про невдале виконання проміса
+        Notify.failure(err);
       });
   }
 });
