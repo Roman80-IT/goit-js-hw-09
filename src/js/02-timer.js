@@ -414,7 +414,7 @@ const $timerValues = {
   minutes: document.querySelector('span[data-minutes]'),
   seconds: document.querySelector('span[data-seconds]'),
 };
-
+console.log('Reset button clicked1'); // Перевірка кнопки
 let timerInterval;
 let currentDate = Date.now();
 let timeLeft = 0;
@@ -480,6 +480,7 @@ function onStartButtonClick() {
   timerInterval = interval;
 }
 
+console.log('Reset button clicked2'); // Перевірка кнопки
 // function onResetButtonClick()
 // window.onResetButtonClick = function ()
 function onResetButtonClick() {
