@@ -46,15 +46,15 @@
 //*    і виводить сповіщення про їх результати за допомогою бібліотеки 'Notiflix Notify'
 
 //* Імпортуємо бібліотеку для сповіщень
-// import { Notify } from 'notiflix/build/notiflix-notify-aio';
+import { Notify } from 'notiflix/build/notiflix-notify-aio';
 
-// //* Вибираємо елементи - форму та поля вводу
-// const $form = document.querySelector('.form');
-// const $formInputs = {
-//   delay: document.querySelector('input[name="delay"]'),
-//   step: document.querySelector('input[name="step"]'),
-//   amount: document.querySelector('input[name="amount"]'),
-// };
+//* Вибираємо елементи - форму та поля вводу
+const $form = document.querySelector('.form');
+const $formInputs = {
+  delay: document.querySelector('input[name="delay"]'),
+  step: document.querySelector('input[name="step"]'),
+  amount: document.querySelector('input[name="amount"]'),
+};
 
 //!---------------------------------- Виправити ------------------------------------
 //* Додаємо обробник події для подання форми
@@ -81,44 +81,44 @@
 //!--------------------------------- Виправлення ---------------------------
 //! якщо step <0 або delay <0 або  amount <=0 показуємо нотифікашку і не рендеримо проміси
 
-// $form.addEventListener('submit', event => {
-//   event.preventDefault();
+$form.addEventListener('submit', event => {
+  event.preventDefault();
 
-//   const delay = Number($formInputs.delay.value);
-//   const step = Number($formInputs.step.value);
-//   const amount = Number($formInputs.amount.value);
+  const delay = Number($formInputs.delay.value);
+  const step = Number($formInputs.step.value);
+  const amount = Number($formInputs.amount.value);
 
-//   if (step < 0 || delay < 0 || amount <= 0) {
-//     //* Скористаймося бібліотекою Notiflix Notify, яка дозволяє виводити різні типи сповіщень (нотифікацій)(notification message) на сторінці.
-//     //*  використовується ф-ція Notify.success() для виведення сповіщення зі статусом успішного виконання промісу та
-//     //*  Notify.failure() для виведення сповіщення зі статусом невдалого виконання промісу
-//     Notify.failure('Некоректні значення введених параметрів.');
-//     return; //* Припиняємо виконання ф-ції, щоб не створювати проміси
-//   }
+  if (step < 0 || delay < 0 || amount <= 0) {
+    //* Скористаймося бібліотекою Notiflix Notify, яка дозволяє виводити різні типи сповіщень (нотифікацій)(notification message) на сторінці.
+    //*  використовується ф-ція Notify.success() для виведення сповіщення зі статусом успішного виконання промісу та
+    //*  Notify.failure() для виведення сповіщення зі статусом невдалого виконання промісу
+    Notify.failure('Некоректні значення введених параметрів.');
+    return; //* Припиняємо виконання ф-ції, щоб не створювати проміси
+  }
 
-//   for (let i = 0; i < amount; i += 1) {
-//     const promiseDelay = delay + i * step;
+  for (let i = 0; i < amount; i += 1) {
+    const promiseDelay = delay + i * step;
 
-//     createPromise(i + 1, promiseDelay)
-//       .then(value => {
-//         Notify.success(value);
-//       })
-//       .catch(err => {
-//         Notify.failure(err);
-//       });
-//   }
-// });
+    createPromise(i + 1, promiseDelay)
+      .then(value => {
+        Notify.success(value);
+      })
+      .catch(err => {
+        Notify.failure(err);
+      });
+  }
+});
 
-// //* Ф-ція для створення проміса
-// function createPromise(position, delay) {
-//   return new Promise((res, rej) => {
-//     setTimeout(() => {
-//       const shouldResolve = Math.random() > 0.3;
-//       if (shouldResolve) {
-//         res(`✅ Fulfilled promise ${position} in ${delay}ms`);
-//       } else {
-//         rej(`❌ Rejected promise ${position} in ${delay}ms`);
-//       }
-//     }, delay);
-//   });
-// }
+//* Ф-ція для створення проміса
+function createPromise(position, delay) {
+  return new Promise((res, rej) => {
+    setTimeout(() => {
+      const shouldResolve = Math.random() > 0.3;
+      if (shouldResolve) {
+        res(`✅ Fulfilled promise ${position} in ${delay}ms`);
+      } else {
+        rej(`❌ Rejected promise ${position} in ${delay}ms`);
+      }
+    }, delay);
+  });
+}
