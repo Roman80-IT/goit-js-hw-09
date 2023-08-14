@@ -301,6 +301,7 @@ const $timerValues = {
   seconds: document.querySelector('span[data-seconds]'),
 };
 
+$startBtn.disabled = true; //* Кнопка "Start" є неактивною на початку
 let timerInterval;
 let currentDate = Date.now();
 let timeLeft = 0;
