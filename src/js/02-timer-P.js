@@ -401,24 +401,259 @@
 
 //! ---------------------------   ВАРІАНТ 4   -------------------------------
 
+// import flatpickr from 'flatpickr';
+// import 'flatpickr/dist/flatpickr.min.css';
+// import { Notify } from 'notiflix/build/notiflix-notify-aio';
+
+// const $startButton = document.querySelector('button[data-start]');
+// const $resetButton = document.querySelector('button[data-reset]');
+// const $inputDate = document.querySelector('#datetime-picker');
+// const $timerValues = {
+//   days: document.querySelector('span[data-days]'),
+//   hours: document.querySelector('span[data-hours]'),
+//   minutes: document.querySelector('span[data-minutes]'),
+//   seconds: document.querySelector('span[data-seconds]'),
+// };
+// console.log('Reset button clicked1'); // Перевірка кнопки
+// let timerInterval;
+// let currentDate = Date.now();
+// let timeLeft = 0;
+// let selectedDate = 0;
+
+// const options = {
+//   enableTime: true,
+//   time_24hr: true,
+//   defaultDate: new Date(),
+//   minuteIncrement: 1,
+//   onClose(selectedDates) {
+//     if (Date.parse(selectedDates[0]) < currentDate) {
+//       Notify.failure('Please choose a date in the future');
+//       $startButton.disabled = true;
+//     } else {
+//       selectedDate = Date.parse(selectedDates[0]);
+//       $startButton.disabled = false;
+//     }
+//   },
+// };
+
+// const datePicker = flatpickr($inputDate, options);
+
+// // $startButton.addEventListener('click', onStartButtonClick);
+// // $resetButton.addEventListener('click', onResetButtonClick);
+
+// $startButton.addEventListener('click', () => {
+//   onStartButtonClick();
+// });
+
+// $resetButton.addEventListener('click', () => {
+//   onResetButtonClick();
+// });
+
+// // function onStartButtonClick()
+// // window.onStartButtonClick = function ()
+// function onStartButtonClick() {
+//   clearInterval(timerInterval);
+//   $inputDate.disabled = true;
+//   $startButton.disabled = true;
+
+//   const interval = setInterval(() => {
+//     currentDate = Date.now();
+//     timeLeft = selectedDate - currentDate;
+
+//     if (timeLeft > 0) {
+//       const convertedTimeLeft = convertMs(timeLeft);
+//       $timerValues.days.textContent = addLeadingZero(convertedTimeLeft.days);
+//       $timerValues.hours.textContent = addLeadingZero(convertedTimeLeft.hours);
+//       $timerValues.minutes.textContent = addLeadingZero(
+//         convertedTimeLeft.minutes
+//       );
+//       $timerValues.seconds.textContent = addLeadingZero(
+//         convertedTimeLeft.seconds
+//       );
+//     } else {
+//       clearInterval(interval);
+//       resetTimerValues();
+//       Notify.success('Time is up!');
+//       $inputDate.disabled = false;
+//     }
+//   }, 1000);
+//   timerInterval = interval;
+// }
+
+// console.log('Reset button clicked2'); // Перевірка кнопки
+// // function onResetButtonClick()
+// // window.onResetButtonClick = function ()
+// function onResetButtonClick() {
+//   console.log('Reset button clicked'); // Перевірка кнопки
+//   clearInterval(timerInterval);
+//   $inputDate.disabled = false;
+//   $startButton.disabled = true;
+//   resetTimerValues();
+// }
+
+// function resetTimerValues() {
+//   $timerValues.days.textContent = '00';
+//   $timerValues.hours.textContent = '00';
+//   $timerValues.minutes.textContent = '00';
+//   $timerValues.seconds.textContent = '00';
+// }
+
+// function convertMs(ms) {
+//   const second = 1000;
+//   const minute = second * 60;
+//   const hour = minute * 60;
+//   const day = hour * 24;
+
+//   const days = Math.floor(ms / day);
+//   const hours = Math.floor((ms % day) / hour);
+//   const minutes = Math.floor(((ms % day) % hour) / minute);
+//   const seconds = Math.floor((((ms % day) % hour) % minute) / second);
+
+//   return { days, hours, minutes, seconds };
+// }
+
+// function addLeadingZero(value) {
+//   return String(value).padStart(2, '0');
+// }
+
+//! ---------------------------   ВАРІАНТ 5   -------------------------------
+
+// import flatpickr from 'flatpickr';
+// import 'flatpickr/dist/flatpickr.min.css';
+// import { Notify } from 'notiflix/build/notiflix-notify-aio';
+
+// const $startButton = document.querySelector('button[data-start]');
+// const $resetButton = document.querySelector('button[data-reset]');
+// const $inputDate = document.querySelector('#datetime-picker');
+// const $timerValues = {
+//   days: document.querySelector('span[data-days]'),
+//   hours: document.querySelector('span[data-hours]'),
+//   minutes: document.querySelector('span[data-minutes]'),
+//   seconds: document.querySelector('span[data-seconds]'),
+// };
+
+// let timerInterval;
+// let currentDate = Date.now();
+// let timeLeft = 0;
+// let selectedDate = 0;
+// let isTimerRunning = false; //* Нова змінна для відстеження стану таймера
+
+// const options = {
+//   enableTime: true,
+//   time_24hr: true,
+//   defaultDate: new Date(),
+//   minuteIncrement: 1,
+//   onClose(selectedDates) {
+//     if (Date.parse(selectedDates[0]) < currentDate) {
+//       Notify.failure('Please choose a date in the future');
+//       $startButton.disabled = true;
+//     } else if (!isTimerRunning) {
+//       // Enable "Start" button only if timer is not running
+//       selectedDate = Date.parse(selectedDates[0]);
+//       $startButton.disabled = false;
+//     }
+//   },
+// };
+
+// const datePicker = flatpickr($inputDate, options);
+
+// $startButton.addEventListener('click', () => {
+//   onStartButtonClick();
+// });
+
+// $resetButton.addEventListener('click', () => {
+//   onResetButtonClick();
+// });
+
+// function onStartButtonClick() {
+//   clearInterval(timerInterval);
+//   isTimerRunning = true; // Start timer
+//   $inputDate.disabled = true;
+//   $startButton.disabled = true;
+
+//   const interval = setInterval(() => {
+//     if (!isTimerRunning) {
+//       clearInterval(interval);
+//       return;
+//     }
+
+//     currentDate = Date.now();
+//     timeLeft = selectedDate - currentDate;
+
+//     if (timeLeft > 0) {
+//       const convertedTimeLeft = convertMs(timeLeft);
+//       $timerValues.days.textContent = addLeadingZero(convertedTimeLeft.days);
+//       $timerValues.hours.textContent = addLeadingZero(convertedTimeLeft.hours);
+//       $timerValues.minutes.textContent = addLeadingZero(
+//         convertedTimeLeft.minutes
+//       );
+//       $timerValues.seconds.textContent = addLeadingZero(
+//         convertedTimeLeft.seconds
+//       );
+//     } else {
+//       clearInterval(interval);
+//       isTimerRunning = false; // Timer finished
+//       resetTimerValues();
+//       Notify.success('Time is up!');
+//       $inputDate.disabled = false;
+//     }
+//   }, 1000);
+//   timerInterval = interval;
+// }
+
+// function onResetButtonClick() {
+//   clearInterval(timerInterval);
+//   isTimerRunning = false; // Stop timer
+//   $inputDate.disabled = false;
+//   $startButton.disabled = true;
+//   resetTimerValues();
+// }
+
+// function resetTimerValues() {
+//   $timerValues.days.textContent = '00';
+//   $timerValues.hours.textContent = '00';
+//   $timerValues.minutes.textContent = '00';
+//   $timerValues.seconds.textContent = '00';
+// }
+
+// function convertMs(ms) {
+//   const second = 1000;
+//   const minute = second * 60;
+//   const hour = minute * 60;
+//   const day = hour * 24;
+
+//   const days = Math.floor(ms / day);
+//   const hours = Math.floor((ms % day) / hour);
+//   const minutes = Math.floor(((ms % day) % hour) / minute);
+//   const seconds = Math.floor((((ms % day) % hour) % minute) / second);
+
+//   return { days, hours, minutes, seconds };
+// }
+
+// function addLeadingZero(value) {
+//   return String(value).padStart(2, '0');
+// }
+
+//! ---------------------------   Existing   -------------------------------
+
 import flatpickr from 'flatpickr';
 import 'flatpickr/dist/flatpickr.min.css';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
 
-const $startButton = document.querySelector('button[data-start]');
-const $resetButton = document.querySelector('button[data-reset]');
+const $startBtn = document.querySelector('button[data-start]');
 const $inputDate = document.querySelector('#datetime-picker');
-const $timerValues = {
+const $timerValue = {
   days: document.querySelector('span[data-days]'),
   hours: document.querySelector('span[data-hours]'),
   minutes: document.querySelector('span[data-minutes]'),
   seconds: document.querySelector('span[data-seconds]'),
 };
-console.log('Reset button clicked1'); // Перевірка кнопки
-let timerInterval;
-let currentDate = Date.now();
+
+$startBtn.disabled = true; //* Кнопка "Start" є неактивною на початку
+let dateNow = Date.now();
 let timeLeft = 0;
 let selectedDate = 0;
+let timerInterval = null; // Added to keep track of the timer interval
 
 const options = {
   enableTime: true,
@@ -426,88 +661,63 @@ const options = {
   defaultDate: new Date(),
   minuteIncrement: 1,
   onClose(selectedDates) {
-    if (Date.parse(selectedDates[0]) < currentDate) {
+    //* При обранні поточної дати або дати в минулому, відображає повідомлення та блокує кнопку "Start":
+    if (Date.parse(selectedDates[0]) < dateNow) {
       Notify.failure('Please choose a date in the future');
-      $startButton.disabled = true;
+      $startBtn.disabled = true;
+      //* Кнопку "Start" активуємо тільки після вибору дати в майбутньому:
     } else {
       selectedDate = Date.parse(selectedDates[0]);
-      $startButton.disabled = false;
+      $startBtn.disabled = false;
     }
   },
 };
 
-const datePicker = flatpickr($inputDate, options);
+const fp = flatpickr($inputDate, options);
 
-// $startButton.addEventListener('click', onStartButtonClick);
-// $resetButton.addEventListener('click', onResetButtonClick);
+$startBtn.addEventListener('click', onStartBtnClick);
 
-$startButton.addEventListener('click', () => {
-  onStartButtonClick();
-});
+function onStartBtnClick() {
+  if (timerInterval) {
+    clearInterval(timerInterval); // Clear any existing interval to avoid overlapping timers
+  }
 
-$resetButton.addEventListener('click', () => {
-  onResetButtonClick();
-});
-
-// function onStartButtonClick()
-// window.onStartButtonClick = function ()
-function onStartButtonClick() {
-  clearInterval(timerInterval);
-  $inputDate.disabled = true;
-  $startButton.disabled = true;
-
-  const interval = setInterval(() => {
-    currentDate = Date.now();
-    timeLeft = selectedDate - currentDate;
-
+  timerInterval = setInterval(() => {
+    dateNow = Date.now();
+    timeLeft = selectedDate - dateNow;
     if (timeLeft > 0) {
-      const convertedTimeLeft = convertMs(timeLeft);
-      $timerValues.days.textContent = addLeadingZero(convertedTimeLeft.days);
-      $timerValues.hours.textContent = addLeadingZero(convertedTimeLeft.hours);
-      $timerValues.minutes.textContent = addLeadingZero(
-        convertedTimeLeft.minutes
-      );
-      $timerValues.seconds.textContent = addLeadingZero(
-        convertedTimeLeft.seconds
-      );
+      const convertTimeLeft = convertMs(timeLeft);
+      $timerValue.days.textContent = convertTimeLeft.days;
+      $timerValue.hours.textContent = convertTimeLeft.hours;
+      $timerValue.minutes.textContent = convertTimeLeft.minutes;
+      $timerValue.seconds.textContent = convertTimeLeft.seconds;
     } else {
-      clearInterval(interval);
-      resetTimerValues();
-      Notify.success('Time is up!');
-      $inputDate.disabled = false;
+      clearInterval(timerInterval);
     }
   }, 1000);
-  timerInterval = interval;
-}
 
-console.log('Reset button clicked2'); // Перевірка кнопки
-// function onResetButtonClick()
-// window.onResetButtonClick = function ()
-function onResetButtonClick() {
-  console.log('Reset button clicked'); // Перевірка кнопки
-  clearInterval(timerInterval);
-  $inputDate.disabled = false;
-  $startButton.disabled = true;
-  resetTimerValues();
-}
-
-function resetTimerValues() {
-  $timerValues.days.textContent = '00';
-  $timerValues.hours.textContent = '00';
-  $timerValues.minutes.textContent = '00';
-  $timerValues.seconds.textContent = '00';
+  //* Дату блокуємо, коли таймер вже запущено:
+  fp.destroy(); // Disable further date changes once the timer starts
+  $inputDate.disabled = true;
 }
 
 function convertMs(ms) {
+  // Number of milliseconds per unit of time
   const second = 1000;
   const minute = second * 60;
   const hour = minute * 60;
   const day = hour * 24;
 
-  const days = Math.floor(ms / day);
-  const hours = Math.floor((ms % day) / hour);
-  const minutes = Math.floor(((ms % day) % hour) / minute);
-  const seconds = Math.floor((((ms % day) % hour) % minute) / second);
+  // Remaining days
+  const days = addLeadingZero(Math.floor(ms / day));
+  // Remaining hours
+  const hours = addLeadingZero(Math.floor((ms % day) / hour));
+  // Remaining minutes
+  const minutes = addLeadingZero(Math.floor(((ms % day) % hour) / minute));
+  // Remaining seconds
+  const seconds = addLeadingZero(
+    Math.floor((((ms % day) % hour) % minute) / second)
+  );
 
   return { days, hours, minutes, seconds };
 }
