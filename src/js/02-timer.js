@@ -301,11 +301,12 @@ const $timerValues = {
   seconds: document.querySelector('span[data-seconds]'),
 };
 
-// $startBtn.disabled = true; //* Кнопка "Start" є неактивною на початку
 let timerInterval;
 let currentDate = Date.now();
 let timeLeft = 0;
 let selectedDate = 0;
+
+$startButton.disabled = true; //* Кнопка "Start" є неактивною на початку
 
 // Options for flatpickr initialization
 const options = {
@@ -314,6 +315,7 @@ const options = {
   defaultDate: new Date(),
   minuteIncrement: 1,
   onClose(selectedDates) {
+    console.log('onClose function called'); //! КОНСОЛЬ
     if (Date.parse(selectedDates[0]) < currentDate) {
       Notify.failure('Please choose a date in the future');
       $startButton.disabled = true;
