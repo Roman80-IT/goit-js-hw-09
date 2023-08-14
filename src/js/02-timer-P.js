@@ -650,7 +650,7 @@ const $timerValue = {
 };
 
 $startBtn.disabled = true; //* Кнопка "Start" є неактивною на початку
-let dateNow = Date.now();
+let currentDate = Date.now();
 let timeLeft = 0;
 let selectedDate = 0;
 let timerInterval = null; // Added to keep track of the timer interval
@@ -662,7 +662,7 @@ const options = {
   minuteIncrement: 1,
   onClose(selectedDates) {
     //* При обранні поточної дати або дати в минулому, відображає повідомлення та блокує кнопку "Start":
-    if (Date.parse(selectedDates[0]) < dateNow) {
+    if (Date.parse(selectedDates[0]) < currentDate) {
       Notify.failure('Please choose a date in the future');
       $startBtn.disabled = true;
       //* Кнопку "Start" активуємо тільки після вибору дати в майбутньому:
@@ -683,8 +683,8 @@ function onStartBtnClick() {
   }
 
   timerInterval = setInterval(() => {
-    dateNow = Date.now();
-    timeLeft = selectedDate - dateNow;
+    currentDate = Date.now();
+    timeLeft = selectedDate - currentDate;
     if (timeLeft > 0) {
       const convertTimeLeft = convertMs(timeLeft);
       $timerValue.days.textContent = convertTimeLeft.days;
